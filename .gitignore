@@ -2,3 +2,4 @@ node_nodules
 logs
 var
 .env
+.idea
