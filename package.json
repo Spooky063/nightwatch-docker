@@ -1,0 +1,21 @@
+{
+  "name": "nightwatch-docker",
+  "version": "1.0.0",
+  "description": "Nightwatch tests with Docker",
+  "main": "index.js",
+  "engines": {
+    "yarn": ">= 1.6",
+    "node": ">= 18.0"
+  },
+  "scripts": {
+    "test:nightwatch": "node -r dotenv-safe/config ./node_modules/.bin/nightwatch --config ./nightwatch.conf.js"
+  },
+  "dependencies": {
+    "nightwatch": "^2.6.7"
+  },
+  "devDependencies": {
+    "dotenv-safe": "^8.2.0",
+    "chromedriver": "^126.0.4"
+  },
+  "packageManager": "yarn@1.22.22"
+}

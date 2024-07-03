@@ -1,0 +1,22 @@
+services:
+  node:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - selenium
+    networks:
+      - nightwatch-net
+    stdin_open: true
+    tty: true
+
+  selenium:
+    image: selenium/standalone-chrome
+    networks:
+      - nightwatch-net
+    ports:
+      - "4444:4444"
+
+networks:
+  nightwatch-net:
+    driver: bridge
