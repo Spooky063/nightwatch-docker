@@ -1,7 +1,6 @@
 module.exports = {
     src_folders: ["tests"],
-    output_folder: process.env.NIGHTWATCH_OUTPUT,
-    log_path: process.env.NIGHTWATCH_LOG,
+    output_folder: process.env.NIGHTWATCH_OUTPUT, //var/nightwatch/ouput
     webdriver: {
         start_process: true,
         server_path: "node_modules/.bin/chromedriver",
