@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test:nightwatch": "node -r dotenv-safe/config ./node_modules/.bin/nightwatch --config ./nightwatch.conf.js"
+    "test:nightwatch-report": "node -r dotenv-safe/config ./node_modules/.bin/nightwatch --config ./nightwatch.conf.js --reporter=junit --reporter=html"
   },
   "dependencies": {
     "nightwatch": "^2.6.7"
