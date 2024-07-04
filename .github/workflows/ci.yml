@@ -60,6 +60,11 @@ jobs:
           name: report
           path: var/nightwatch
 
+      - name: Publish Junit Report
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: '**/var/nightwatch/reports/*.xml'
+
       - name: Tear down Docker Compose
         if: always()
         run: docker compose down -v
