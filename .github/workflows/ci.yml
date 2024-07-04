@@ -37,14 +37,14 @@ jobs:
       - name: Set up Docker Compose
         run: |
           sudo apt-get update
-          sudo apt-get install docker-compose -y
+          sudo apt-get install docker-compose-plugin -y
 
       - name: Run Docker Compose
-        run: docker-compose -f compose.yml up --build -d
+        run: docker compose up --build -d
 
       - name: Run tests
-        run: docker-compose -f compose.yml exec -it node npm run test:nightwatch
+        run: docker compose exec -it node npm run test:nightwatch
 
       - name: Tear down Docker Compose
         if: always()
-        run: docker-compose -f compose.yml down
+        run: docker compose down -v
