@@ -1,5 +1,6 @@
-node_nodules
+node_modules
 logs
 var
+
 .env
 .idea
