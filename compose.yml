@@ -4,6 +4,10 @@ services:
       context: .
       target: node_base
     container_name: nightwatch_node
+    environment:
+      NIGHTWATCH_OUTPUT: var/nightwatch/output
+      NIGHTWATCH_HOST: selenium
+      NIGHTWATCH_PORT: 4444
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -13,8 +17,6 @@ services:
       - nightwatch-net
     stdin_open: true
     tty: true
-    env_file:
-      - .env
 
   selenium:
     image: selenium/standalone-chrome
