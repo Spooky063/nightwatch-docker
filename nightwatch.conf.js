@@ -2,13 +2,17 @@ module.exports = {
     src_folders: ["tests"],
     output_folder: `${process.env.NIGHTWATCH_OUTPUT}/reports`, // "var/nightwatch"
     webdriver: {
-        start_process: false,
+        start_process: true,
+        server_path: "node_modules/.bin/chromedriver",
+        host: process.env.WEBDRIVER_HOSTNAME, // "selenium",
+        port: process.env.WEBDRIVER_PORT, // 4444,
+        ssl: false,
+        default_path_prefix: process.env.WEBDRIVER_PATH_PREFIX || '',
+        proxy: undefined,
+        cli_args: {}
     },
     test_settings: {
         default: {
-            selenium_port: process.env.WEBDRIVER_PORT || 4444,
-            selenium_host: process.env.WEBDRIVER_HOSTNAME || "localhost",
-            default_path_prefix: process.env.WEBDRIVER_PATH_PREFIX || '',
             desiredCapabilities: {
                 browserName: "chrome",
                 acceptSslCerts: true,
