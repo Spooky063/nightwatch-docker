@@ -52,7 +52,13 @@ jobs:
         run: docker compose up --build -d
 
       - name: Run tests
-        run: docker compose exec -it node npm run test:nightwatch
+        run: docker compose exec -it node npm run test:nightwatch-report
+
+      - name: Archive results
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: var/nightwatch/output
 
       - name: Tear down Docker Compose
         if: always()
