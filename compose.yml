@@ -5,9 +5,9 @@ services:
       target: node_base
     container_name: nightwatch_node
     environment:
-      NIGHTWATCH_OUTPUT: var/nightwatch/output
-      NIGHTWATCH_HOST: selenium
-      NIGHTWATCH_PORT: 4444
+      NIGHTWATCH_OUTPUT: var/nightwatch
+      WEBDRIVER_HOSTNAME: selenium
+      WEBDRIVER_PORT: 4444
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules

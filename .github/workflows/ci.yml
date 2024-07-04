@@ -58,7 +58,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: report
-          path: var/nightwatch/output
+          path: var/nightwatch
 
       - name: Tear down Docker Compose
         if: always()
