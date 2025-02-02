@@ -15,6 +15,7 @@ services:
       - selenium
     networks:
       - nightwatch-net
+    working_dir: /usr/src/app
     stdin_open: true
     tty: true
 
