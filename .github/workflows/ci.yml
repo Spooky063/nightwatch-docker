@@ -21,12 +21,15 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+        if: false
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+        if: false
 
       - name: Log in to GitHub Container Registry
         run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+        if: false
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -38,6 +41,7 @@ jobs:
           tags: ghcr.io/${{ secrets.GHCR_USERNAME }}/node-selenium:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+        if: false
 
       - name: Set up Docker Compose
         run: |
@@ -76,5 +80,5 @@ jobs:
           report_paths: '**/var/nightwatch/reports/*.xml'
 
       - name: Tear down Docker Compose
-        if: always()
+        if: false
         run: docker compose down -v
