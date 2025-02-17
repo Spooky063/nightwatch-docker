@@ -24,7 +24,7 @@ jobs:
         ports:
           - 4444:4444
         options: >-
-          --health-cmd="curl -s http://localhost:4444/wd/hub/status | grep '\"ready\":true'"
+          --health-cmd="curl -s http://localhost:4444/wd/hub/status | grep '\"ready\": true'"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
