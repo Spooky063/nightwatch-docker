@@ -12,11 +12,22 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/${{ github.actor }}/node-selenium:latest
+      image: node:18
       env:
         NIGHTWATCH_OUTPUT: var/nightwatch
         WEBDRIVER_HOSTNAME: selenium
         WEBDRIVER_PORT: 4444
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome
+        ports:
+          - 4444:4444
+        options: >-
+          --health-cmd="curl -s http://localhost:4444/wd/hub/status | grep '\"ready\":true'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout code
