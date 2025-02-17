@@ -11,7 +11,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ghcr.io/${{ github.actor }}/node-selenium:latest
+    container:
+      image: ghcr.io/${{ github.actor }}/node-selenium:latest
+      env:
+        NIGHTWATCH_OUTPUT: var/nightwatch
+        WEBDRIVER_HOSTNAME: selenium
+        WEBDRIVER_PORT: 4444
 
     steps:
       - name: Checkout code
