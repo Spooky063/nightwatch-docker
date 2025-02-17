@@ -1,5 +1,5 @@
 ARG NODE_VERSION=18
-FROM node:${NODE_VERSION} as node_base
+FROM node:${NODE_VERSION} AS node_base
 
 ENV NODE_ENV=development
 
@@ -12,12 +12,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
-    npm install
+    npm ci
 
 COPY --link . ./
 
-FROM jwilder/dockerize:latest as dockerize
-FROM node_base as node_build
+FROM jwilder/dockerize:latest AS dockerize
+FROM node_base AS node_build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
@@ -28,6 +28,6 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/${DOCKERIZE_VERS
     tar -C /usr/local/bin -xzvf dockerize-linux-amd64-${DOCKERIZE_VERSION}.tar.gz && \
     rm dockerize-linux-amd64-${DOCKERIZE_VERSION}.tar.gz
 
-FROM node_build as node_test
+FROM node_build AS node_test
 
 CMD ["dockerize", "-wait", "tcp://selenium:4444", "-timeout", "60s", "npm", "run", "test:nightwatch"]
