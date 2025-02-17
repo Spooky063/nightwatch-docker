@@ -9,9 +9,6 @@ on:
       - 'Dockerfile'
       - '.github/workflows/build.yml'
 
-permissions:
-  checks: write
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: node-selenium
@@ -19,6 +16,12 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
 
     steps:
       - name: Checkout code
