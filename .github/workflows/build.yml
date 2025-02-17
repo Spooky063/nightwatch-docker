@@ -24,17 +24,21 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Log in to GitHub Container Registry
-        run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ secrets.GHCR_USERNAME }}/${{ env.IMAGE_NAME}}
 
       - name: Build and push Docker image
         id: push
@@ -45,8 +49,7 @@ jobs:
           target: node_base
           push: true
           tags: ${{ env.REGISTRY }}/${{ secrets.GHCR_USERNAME }}/${{ env.IMAGE_NAME}}:${{ github.ref_name }}-${{ github.sha }}
-          labels: |
-            org.opencontainers.image.source https://github.com/${{ github.repository }}
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
