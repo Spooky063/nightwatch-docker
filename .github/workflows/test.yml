@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ghcr.io/${{ secrets.GHCR_USERNAME }}/node-selenium:latest
+    container: ghcr.io/${{ github.actor }}/node-selenium:latest
 
     steps:
       - name: Checkout code
