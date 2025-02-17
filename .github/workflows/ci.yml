@@ -36,6 +36,8 @@ jobs:
           target: node_base
           push: true
           tags: ghcr.io/${{ secrets.GHCR_USERNAME }}/node-selenium:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Set up Docker Compose
         run: |
@@ -53,9 +55,14 @@ jobs:
 
       - name: Run Docker Compose
         run: docker compose up --build -d
+        if: false
 
       - name: Run tests
         run: docker compose exec -it node npm run test:nightwatch:report
+        if: false
+
+      - name: Run tests
+        run: docker compose run --rm node npm run test:nightwatch:report
 
       - name: Archive results
         uses: actions/upload-artifact@v4
