@@ -12,8 +12,12 @@ on:
 permissions:
   checks: write
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: node-selenium
+
 jobs:
-  build:
+  build-and-push-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,12 +34,18 @@ jobs:
         run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
 
       - name: Build and push Docker image
+        id: push
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
           target: node_base
           push: true
-          tags: ghcr.io/${{ secrets.GHCR_USERNAME }}/node-selenium:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          tags: ${{ env.REGISTRY }}/${{ secrets.GHCR_USERNAME }}/${{ env.IMAGE_NAME}}:${{ github.ref_name }}-${{ github.sha }}
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ secrets.GHCR_USERNAME }}/${{ env.IMAGE_NAME}}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
